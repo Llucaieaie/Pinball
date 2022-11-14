@@ -1,0 +1,4 @@
+// Pivot 0, 0
+int Vertex-Box2d[2] = {
+	350, 335
+};
