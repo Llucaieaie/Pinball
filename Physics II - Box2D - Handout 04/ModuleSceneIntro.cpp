@@ -46,18 +46,41 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	/*if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		ray_on = !ray_on;
 		ray.x = App->input->GetMouseX();
 		ray.y = App->input->GetMouseY();
-	}
+	}*/
 
 	if(App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
-		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 25));
+		circles.add(App->physics->CreateCircle(App->input->GetMouseX(), App->input->GetMouseY(), 10));
 		circles.getLast()->data->listener = this;
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+
+		circles.add(App->physics->CreateCircle(360, 530, 8));
+		circles.getLast()->data->listener = this;
+		if (i != 0)
+		{
+			circles.getLast()->prev->data->body->SetTransform({ PIXEL_TO_METERS(10000), PIXEL_TO_METERS(10000) }, 0);
+			circles.del(circles.getLast()->prev);
+		}
+
+		i++;
+		
+	}
+
+
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		b2Vec2 vel = b2Vec2(0, -100);
+		circles.getLast()->data->body->ApplyForceToCenter(vel, true);
+	}
+
 
 	if(App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{

@@ -31,4 +31,6 @@ public:
 	uint bonus_fx;
 	p2Point<int> ray;
 	bool ray_on;
+
+	int i = 0;
 };
