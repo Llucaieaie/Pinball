@@ -31,14 +31,24 @@ bool ModuleSceneIntro::Start()
 	App->renderer->camera.x = App->renderer->camera.y = 0;	
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 5, SCREEN_WIDTH / 2, 5);
-	suma = App->physics->CreateRectangleSensor(28, 294, 2, 5);
-	suma2 = App->physics->CreateRectangleSensor(130, 117, 2, 5);
-	suma3 = App->physics->CreateRectangleSensor(333, 378, 2, 5);
-	suma4 = App->physics->CreateRectangleSensor(318, 154, 2, 5);
-	suma5 = App->physics->CreateRectangleSensor(308, 91, 2, 5);
-	suma6 = App->physics->CreateRectangleSensor(34, 509, 2, 5);
-	suma7 = App->physics->CreateRectangleSensor(330, 509, 2, 5);
-	suma8 = App->physics->CreateRectangleSensor(291, 170, 2, 5);
+
+
+	//BONUS 2X
+	suma = App->physics->CreateCircle(26, 290, 11, b2_staticBody);
+	suma = App->physics->CreateCircle(185, 142, 11, b2_staticBody);
+	suma = App->physics->CreateCircle(249, 154, 11, b2_staticBody);
+	suma = App->physics->CreateCircle(212, 190, 11, b2_staticBody);
+
+	//BONUS 3X
+	suma2 = App->physics->CreateCircle(262, 215, 11, b2_staticBody);
+	suma2 = App->physics->CreateCircle(72, 358, 11, b2_staticBody);
+	suma2 = App->physics->CreateCircle(242, 365, 11, b2_staticBody);
+
+	//BONUS 5X
+	suma3 = App->physics->CreateCircle(130, 117, 11, b2_staticBody);
+	suma3 = App->physics->CreateCircle(332, 377, 11, b2_staticBody);
+
+
 	bool sensed = false;
 
 	// TITLE SCREEN
@@ -51,7 +61,15 @@ bool ModuleSceneIntro::Start()
 	background = App->textures->Load("pinball/PinballDef.png");
 	assets = App->textures->Load("pinball/pinballAssets.png");
 	ball = { 253, 164, 15, 15 };
+<<<<<<< Updated upstream
 	
+=======
+
+	//BONUS
+	bonus1 = { 135, 113, 23, 24 };
+	bonus2 = { 164, 113, 23, 24 };
+	bonus3 = { 192, 113, 23, 24 };
+>>>>>>> Stashed changes
 
 	// GAME OVER SCREEN
 	gameovertexture = App->textures->Load("pinball/GAMEOVER.png");
@@ -117,9 +135,32 @@ update_status ModuleSceneIntro::Update()
 
 	case PINBALL:
 		{
+<<<<<<< Updated upstream
 			App->renderer->Blit(background, 0, 0, NULL);
 
 /*			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+=======
+			
+			App->renderer->Blit(background, 0, 0, NULL);
+
+			//BONUS 2X
+			App->renderer->Blit(assets, 16, 278, false, &bonus1);
+			App->renderer->Blit(assets, 173, 130, false, &bonus1);
+			App->renderer->Blit(assets, 237, 142, false, &bonus1);
+			App->renderer->Blit(assets, 200, 178, false, &bonus1);
+
+			//BONUS 3X
+			App->renderer->Blit(assets, 250, 203, false, &bonus2);
+			App->renderer->Blit(assets, 60, 346, false, &bonus2);
+			App->renderer->Blit(assets, 230, 353, false, &bonus2);
+
+			//BONUS 5X
+			App->renderer->Blit(assets, 118, 105, false, &bonus3);
+			App->renderer->Blit(assets, 320, 365, false, &bonus3);
+
+
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+>>>>>>> Stashed changes
 
 				circles.add(App->physics->CreateCircle(360, 530, 8, b2_dynamicBody));
 				circles.getLast()->data->listener = this;
@@ -228,67 +269,16 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	{
 		currentScene = GAMEOVER;
 		currentScore = 0;
+<<<<<<< Updated upstream
 		vidas = 2;
+=======
+>>>>>>> Stashed changes
 	}
 	
-	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma->body)
-	{
-		currentScore += 10;
+	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma->body) currentScore += 20;
+	
+	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma2->body) currentScore += 30;
 
-	}
+	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma3->body) currentScore += 50;
 
-	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma2->body)
-	{
-		currentScore += 20;
-
-	}
-
-	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma3->body)
-	{
-		currentScore += 30;
-
-	}
-
-	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma4->body)
-	{
-		currentScore += 20;
-
-	}
-
-	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma5->body)
-	{
-		currentScore += 20;
-
-	}
-
-	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma6->body)
-	{
-		currentScore += 10;
-
-	}
-
-	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma7->body)
-	{
-		currentScore += 20;
-
-	}
-
-	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma8->body)
-	{
-		currentScore += 10;
-
-	}
-
-	/*
-	if(bodyA)
-	{
-		bodyA->GetPosition(x, y);
-		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
-	}
-
-	if(bodyB)
-	{
-		bodyB->GetPosition(x, y);
-		App->renderer->DrawCircle(x, y, 50, 100, 100, 100);
-	}*/
 }

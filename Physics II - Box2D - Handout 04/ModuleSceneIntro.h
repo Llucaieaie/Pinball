@@ -37,11 +37,11 @@ public:
 	PhysBody* suma;
 	PhysBody* suma2;
 	PhysBody* suma3;
-	PhysBody* suma4;
-	PhysBody* suma5;
-	PhysBody* suma6;
-	PhysBody* suma7;
-	PhysBody* suma8;
+	
+	SDL_Rect bonus1;
+	SDL_Rect bonus2;
+	SDL_Rect bonus3;
+
 	bool sensed;
 
 	SDL_Texture* circle;
