@@ -52,23 +52,30 @@ bool ModuleFlippers::CleanUp()
 // Update: draw background
 update_status ModuleFlippers::Update()
 {
-	p2List_item<Flipper*>* f = flippers.getFirst();
-	p2List_item<Flipper*>* f2 = flippers.getLast();
-	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		if (f != NULL)
+		p2List_item<Flipper*>* f = flippers.getFirst();
+		while (f != NULL)
 		{
 			if (f->data->side == false)
 			{
-				f->data->Rect->body->ApplyForce({ -1,0 }, { 0,0 }, true);
-				f2->data->Rect->body->ApplyForce({ 1,0 }, { 0,0 }, true);
-				angle++;
+				f->data->Rect->body->ApplyForce({ -3,0 }, { 0,0 }, true);
 			}
 			f = f->next;
 		}
 	}
-	if (angle > 0) angle--;
-	
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		p2List_item<Flipper*>* f = flippers.getFirst();
+		while (f != NULL)
+		{
+			if (f->data->side == true)
+			{
+				f->data->Rect->body->ApplyForce({ 3,0 }, { 0,0 }, true);
+			}
+			f = f->next;
+		}
+	}
 	LOG("Ángulo: %d", angle);
 
 
