@@ -27,15 +27,15 @@ bool ModuleFlippers::Start()
 	f->Circle = App->physics->CreateCircle(124, 555, 5, b2_staticBody);
 	f->Rect = App->physics->CreateRectangle(124, 555+5, 50, 10, b2_dynamicBody);
 	f->side = false;
-	App->physics->CreateRevoluteJoint(f->Rect, a, f->Circle, b, 35.0f);
+	App->physics->CreateRevoluteJoint(f->Rect, a, f->Circle, b, 25.0f);
 	flippers.add(f);
 
 
 	Flipper* f2 = new Flipper;
-	f2->Circle = App->physics->CreateCircle(237, 555, 5, b2_staticBody);
-	f2->Rect = App->physics->CreateRectangle(227-50, 545 + 5, 50, 10, b2_dynamicBody);
+	f2->Circle = App->physics->CreateCircle(236, 555, 5, b2_staticBody);
+	f2->Rect = App->physics->CreateRectangle(236-50, 555 + 5, 50, 10, b2_dynamicBody);
 	f2->side = true;
-	App->physics->CreateRevoluteJoint(f2->Rect, -a, f2->Circle, -b, 35.0f);
+	App->physics->CreateRevoluteJoint(f2->Rect, -a, f2->Circle, -b, 25.0f);
 	flippers.add(f2);
 	return true;
 }
