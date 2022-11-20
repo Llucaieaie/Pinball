@@ -7,9 +7,7 @@ struct Flipper
 {
 	PhysBody* Rect;
 	PhysBody* Circle;
-	bool rightSide;
-
-	p2List<Flipper*> flippers;
+	bool side;
 };
 
 class ModuleFlippers : public Module
@@ -21,6 +19,8 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+
+	p2List<Flipper*> flippers;
 
 public:
 
