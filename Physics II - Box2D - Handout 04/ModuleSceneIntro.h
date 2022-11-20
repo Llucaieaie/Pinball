@@ -50,6 +50,11 @@ public:
 	SDL_Texture* backgroundTexture = nullptr;
 	bool startTitle;
 
+	//PINBALL
+	SDL_Texture* background = nullptr;
+	SDL_Texture* ballTexture;
+
+
 	//GAMEOVER
 	SDL_Texture* gameovertexture = nullptr;
 };

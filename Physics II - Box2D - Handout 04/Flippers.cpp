@@ -51,7 +51,6 @@ bool ModuleFlippers::CleanUp()
 // Update: draw background
 update_status ModuleFlippers::Update()
 {
-	//Flippers --------------------------------------------------
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT)
 	{
 		p2List_item<Flipper*>* f = flippers.getFirst();

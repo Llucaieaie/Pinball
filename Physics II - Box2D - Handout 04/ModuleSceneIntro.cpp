@@ -6,6 +6,7 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
+#include "Flippers.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -35,6 +36,10 @@ bool ModuleSceneIntro::Start()
 	backgroundTexture = App->textures->Load("pinball/intro.png");
 	App->audio->PlayMusic("Game/pinball/bonus.wav", 0);
 	startTitle = false;
+
+	//PINBALL
+	background = App->textures->Load("pinball/PinballDef.png");
+	ballTexture = App->textures->Load("pinball/pinballAssets.png");
 
 	// GAME OVER SCREEN
 	gameovertexture = App->textures->Load("pinball/GAMEOVER.png");
@@ -83,6 +88,8 @@ update_status ModuleSceneIntro::Update()
 
 	case PINBALL:
 		{
+			App->renderer->Blit(background, 0, 0, NULL);
+
 			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 
 				circles.add(App->physics->CreateCircle(360, 530, 8, b2_dynamicBody));
@@ -93,6 +100,7 @@ update_status ModuleSceneIntro::Update()
 					circles.del(circles.getLast()->prev);
 				}
 				i++;
+				App->renderer->Blit(ballTexture, circles.getLast()->prev->data->body->GetPosition().x, circles.getLast()->prev->data->body->GetPosition().y, false, NULL);
 			}	
 
 			/*if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
