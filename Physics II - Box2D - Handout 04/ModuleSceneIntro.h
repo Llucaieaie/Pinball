@@ -52,8 +52,13 @@ public:
 	bool ray_on;
 
 	int i = 0;
+	//b detecta si la bola está al inicio
 	bool b = true;
-	int power = -100;
+	int power = -5;
+
+	//posicion inicial
+	int inPosX;
+	int inPosY;
 
 	// Font stuff
 	int font = -1;
@@ -78,6 +83,7 @@ public:
 	SDL_Texture* background = nullptr;
 	SDL_Texture* assets;
 	SDL_Rect ball;
+	SDL_Rect spring;
 	//SDL_Rect flipper;
 	//SDL_Texture* flippers;
 	

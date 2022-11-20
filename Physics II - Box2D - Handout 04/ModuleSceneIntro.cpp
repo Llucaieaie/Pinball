@@ -28,9 +28,7 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->renderer->camera.x = App->renderer->camera.y = 0;
-
-	
+	App->renderer->camera.x = App->renderer->camera.y = 0;	
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 5, SCREEN_WIDTH / 2, 5);
 	suma = App->physics->CreateRectangleSensor(28, 294, 2, 5);
@@ -54,10 +52,6 @@ bool ModuleSceneIntro::Start()
 	assets = App->textures->Load("pinball/pinballAssets.png");
 	ball = { 253, 164, 15, 15 };
 	
-	//FLIPPER ANIMATION
-
-
-
 
 	// GAME OVER SCREEN
 	gameovertexture = App->textures->Load("pinball/GAMEOVER.png");
@@ -69,6 +63,9 @@ bool ModuleSceneIntro::Start()
 	// BALL
 	circles.add(App->physics->CreateCircle(360, 530, 8, b2_dynamicBody));
 	circles.getLast()->data->listener = this;
+
+	inPosX = circles.getLast()->data->body->GetPosition().x;
+	inPosY = circles.getLast()->data->body->GetPosition().y;
 
 	return ret;
 }
@@ -144,23 +141,25 @@ update_status ModuleSceneIntro::Update()
 			}
 
 
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && b == true)
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && b == true)
 			{
 
-				if (power > -200)
+				if (power > -100)
 				{
-					power--;
+					power-=5;
 				}
 
 				LOG("poder %d", power);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && b == true)
+			else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP && b == true)
 			{
 				b2Vec2 vel = b2Vec2(0, power);
 				circles.getLast()->data->body->ApplyForceToCenter(vel, true);
 				b = false;
 				LOG("poder %d", power);
 			}
+			else
+				power = -5;
 
 			int x;
 			int y;
@@ -172,6 +171,10 @@ update_status ModuleSceneIntro::Update()
 				circles.getLast()->data->body->SetTransform({ PIXEL_TO_METERS(360), PIXEL_TO_METERS(530) }, 0);
 				b = true;
 			}
+			LOG("position.x: %d", circles.getLast()->data->body->GetPosition().x);
+			LOG("position.y: %d", circles.getLast()->data->body->GetPosition().y);
+			if (circles.getLast()->data->body->GetPosition().x >= inPosX && circles.getLast()->data->body->GetPosition().y >= inPosY)
+				b = true;
 
 			// All draw functions ------------------------------------------------------
 			p2List_item<PhysBody*>* c = circles.getFirst();
