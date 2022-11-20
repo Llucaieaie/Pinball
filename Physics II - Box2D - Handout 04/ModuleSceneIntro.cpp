@@ -108,7 +108,7 @@ update_status ModuleSceneIntro::Update()
 		}
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_STATE::KEY_DOWN) {
 			currentScene = PINBALL;
-			App->audio->PlayMusic("Game/pinball/audio/music/silence.ogg");
+			App->audio->PlayMusic("pinball/music.ogg");
 		}
 
 		App->renderer->Blit(backgroundTexture, 0, 0, true);
@@ -117,8 +117,6 @@ update_status ModuleSceneIntro::Update()
 
 	case PINBALL:
 		{
-			//App->audio->PlayMusic("pinball/music.ogg");
-
 			App->renderer->Blit(background, 0, 0, NULL);
 
 /*			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
@@ -192,6 +190,8 @@ update_status ModuleSceneIntro::Update()
 			if (currentScore > highScore) highScore = currentScore;
 
 			if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN) currentScore += 100;
+
+			break;
 		}
 	case GAMEOVER:
 		{
