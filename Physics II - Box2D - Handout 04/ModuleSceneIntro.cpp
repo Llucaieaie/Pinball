@@ -45,6 +45,7 @@ bool ModuleSceneIntro::Start()
 	background = App->textures->Load("pinball/PinballDef.png");
 	assets = App->textures->Load("pinball/pinballAssets.png");
 	flipper = { 192, 199, 56, 16 };
+	ball = { 253,164,15,15 };
 
 	// GAME OVER SCREEN
 	gameovertexture = App->textures->Load("pinball/GAMEOVER.png");
@@ -53,6 +54,9 @@ bool ModuleSceneIntro::Start()
 	scoreFont = App->fonts->Load("pinball/nesfont1.png", " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{:}~ª", 6);
 	highscoreFont = App->fonts->Load("pinball/nesfont.png", " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{:}~ª", 6);
 
+	// BALL
+	circles.add(App->physics->CreateCircle(360, 530, 8, b2_dynamicBody));
+	circles.getLast()->data->listener = this;
 
 	return ret;
 }
@@ -106,7 +110,7 @@ update_status ModuleSceneIntro::Update()
 		{
 
 			App->renderer->Blit(background, 0, 0, NULL);
-
+/*
 			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 
 				circles.add(App->physics->CreateCircle(360, 530, 8, b2_dynamicBody));
@@ -117,8 +121,8 @@ update_status ModuleSceneIntro::Update()
 					circles.del(circles.getLast()->prev);
 				}
 				i++;
-			}	
-			//App->renderer->Blit(assets, circles.getLast()->prev->data->body->GetPosition().x, circles.getLast()->prev->data->body->GetPosition().y, false, NULL);
+			}*/	
+			
 			App->renderer->Blit(assets, 124, 555, false, &flipper, 1.0f/*, App->flippers->angle*/);
 
 			if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
@@ -127,10 +131,23 @@ update_status ModuleSceneIntro::Update()
 			}
 
 
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && b == true)
 			{
 				b2Vec2 vel = b2Vec2(0, -100);
 				circles.getLast()->data->body->ApplyForceToCenter(vel, true);
+				b = false;
+			}
+
+
+			int x;
+			int y;
+			circles.getLast()->data->GetPosition(x, y);
+			LOG("%d", y);
+			App->renderer->Blit(assets, x, y, false, &ball);
+			if (y > 800)
+			{
+				circles.getLast()->data->body->SetTransform({ PIXEL_TO_METERS(360), PIXEL_TO_METERS(530) }, 0);
+				b = true;
 			}
 
 			// All draw functions ------------------------------------------------------
