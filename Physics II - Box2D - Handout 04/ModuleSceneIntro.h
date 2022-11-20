@@ -45,6 +45,7 @@ public:
 
 	int i = 0;
 	bool b = true;
+	int power = -100;
 
 	// Font stuff
 	int font = -1;

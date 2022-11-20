@@ -131,13 +131,23 @@ update_status ModuleSceneIntro::Update()
 			}
 
 
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && b == true)
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && b == true)
 			{
-				b2Vec2 vel = b2Vec2(0, -100);
+
+				if (power > -200)
+				{
+					power--;
+				}
+
+				LOG("poder %d", power);
+			}
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+			{
+				b2Vec2 vel = b2Vec2(0, power);
 				circles.getLast()->data->body->ApplyForceToCenter(vel, true);
 				b = false;
+				LOG("poder %d", power);
 			}
-
 
 			int x;
 			int y;
