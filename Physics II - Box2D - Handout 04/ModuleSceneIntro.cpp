@@ -35,20 +35,20 @@ bool ModuleSceneIntro::Start()
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 5, SCREEN_WIDTH / 2, 5);
 
 
-	//BONUS 2X
-	suma = App->physics->CreateCircle(26, 290, 11, b2_staticBody);
+	//BONUS 2X COLLIDER
+	suma = App->physics->CreateCircle(25, 290, 11, b2_staticBody);
 	suma = App->physics->CreateCircle(185, 142, 11, b2_staticBody);
 	suma = App->physics->CreateCircle(249, 154, 11, b2_staticBody);
 	suma = App->physics->CreateCircle(212, 190, 11, b2_staticBody);
 
-	//BONUS 3X
+	//BONUS 3X COLLIDER
 	suma2 = App->physics->CreateCircle(262, 215, 11, b2_staticBody);
 	suma2 = App->physics->CreateCircle(72, 358, 11, b2_staticBody);
 	suma2 = App->physics->CreateCircle(242, 365, 11, b2_staticBody);
 
-	//BONUS 5X
-	suma3 = App->physics->CreateCircle(130, 117, 10, b2_staticBody);
-	suma3 = App->physics->CreateCircle(332, 377, 10, b2_staticBody);
+	//BONUS 5X COLLIDER
+	suma3 = App->physics->CreateCircle(130, 117, 11, b2_staticBody);
+	suma3 = App->physics->CreateCircle(332, 377, 11, b2_staticBody);
 
 
 	bool sensed = false;
@@ -68,6 +68,9 @@ bool ModuleSceneIntro::Start()
 	bonus1 = { 135, 113, 23, 24 };
 	bonus2 = { 164, 113, 23, 24 };
 	bonus3 = { 192, 113, 23, 24 };
+
+	//DECORATION
+	flecha = { 49, 110, 70, 31 };
 
 	// GAME OVER SCREEN
 	gameovertexture = App->textures->Load("pinball/GAMEOVER.png");
@@ -151,6 +154,11 @@ update_status ModuleSceneIntro::Update()
 			//BONUS 5X
 			App->renderer->Blit(assets, 118, 105, false, &bonus3);
 			App->renderer->Blit(assets, 320, 365, false, &bonus3);
+
+
+			App->renderer->Blit(assets, 155, 40, false, &flecha);
+			App->renderer->Blit(assets, 80, 250, false, &flecha, false, 0.0f, 75);
+
 
 
 			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
