@@ -32,12 +32,12 @@ bool ModuleSceneIntro::Start()
 
 	// TITLE SCREEN
 	currentScene = TITLESCREEN;
-	backgroundTexture = App->textures->Load("pinball/rick_head.png");
+	backgroundTexture = App->textures->Load("pinball/intro.png");
 	App->audio->PlayMusic("Game/pinball/bonus.wav", 0);
 	startTitle = false;
 
 	// GAME OVER SCREEN
-	gameovertexture = App->textures->Load("pinball/wheel.png");
+	gameovertexture = App->textures->Load("pinball/GAMEOVER.png");
 
 
 	return ret;
