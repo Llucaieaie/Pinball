@@ -190,7 +190,7 @@ update_status ModuleSceneIntro::Update()
 				{
 					power -= 5;
 				}
-
+				b = false;
 				LOG("poder %d", power);
 			}
 			else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP && b == true)
