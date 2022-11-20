@@ -149,7 +149,7 @@ update_status ModuleSceneIntro::Update()
 
 				LOG("poder %d", power);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && b == true)
 			{
 				b2Vec2 vel = b2Vec2(0, power);
 				circles.getLast()->data->body->ApplyForceToCenter(vel, true);
