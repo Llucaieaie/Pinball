@@ -348,3 +348,7 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+!/BOX2D/*
+!/SDL/*
+!Box2D\libx86\Debug
+!Box2D\libx86\Release

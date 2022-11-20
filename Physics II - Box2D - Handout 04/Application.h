@@ -13,6 +13,8 @@ class ModulePlayer;
 class ModuleSceneIntro;
 class ModulePhysics;
 
+class ModuleFlippers;
+
 class Application
 {
 public:
@@ -24,6 +26,8 @@ public:
 	ModulePlayer* player;
 	ModuleSceneIntro* scene_intro;
 	ModulePhysics* physics;
+
+	ModuleFlippers* flippers;
 
 private:
 

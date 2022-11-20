@@ -12,6 +12,12 @@
 #define METERS_TO_PIXELS(m) ((int) floor(PIXELS_PER_METER * m))
 #define PIXEL_TO_METERS(p)  ((float) METER_PER_PIXEL * p)
 
+#define DEG_PER_RAD ((float)M_PI/180)
+#define RAD_PER_DEG ((float)180/M_PI)
+
+#define DEG_TO_RAD(r) ((float) DEG_PER_RAD * r)
+#define RAD_TO_DEG(r) ((float) RAD_PER_DEG * r)
+
 // Small class to return to other modules to track position and rotation of physics bodies
 class PhysBody
 {
@@ -42,10 +48,13 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	PhysBody* CreateCircle(int x, int y, int radius);
-	PhysBody* CreateRectangle(int x, int y, int width, int height);
+	PhysBody* CreateCircle(int x, int y, int radius, b2BodyType type);
+	PhysBody* CreateRectangle(int x, int y, int width, int height, b2BodyType type);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height);
 	PhysBody* CreateChain(int x, int y, int* points, int size);
+
+	b2RevoluteJoint* CreateRevoluteJoint(PhysBody* A, b2Vec2 anchorA, PhysBody* B, b2Vec2 anchorB, float angle = 0.0f, bool collideConnected = false, bool enableLimit = true);
+
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);
