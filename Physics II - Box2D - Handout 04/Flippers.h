@@ -21,4 +21,6 @@ public:
 	bool CleanUp();
 
 	p2List<Flipper*> flippers;
+
+	float angle;
 };

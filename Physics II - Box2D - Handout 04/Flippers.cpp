@@ -28,9 +28,10 @@ bool ModuleFlippers::Start()
 	f->Rect = App->physics->CreateRectangle(124, 555+5, 50, 10, b2_dynamicBody);
 	f->side = false;
 	App->physics->CreateRevoluteJoint(f->Rect, a, f->Circle, b, 25.0f);
+	angle = 25.0f;
 	flippers.add(f);
 
-
+	
 	Flipper* f2 = new Flipper;
 	f2->Circle = App->physics->CreateCircle(236, 555, 5, b2_staticBody);
 	f2->Rect = App->physics->CreateRectangle(236-50, 555 + 5, 50, 10, b2_dynamicBody);
@@ -51,29 +52,29 @@ bool ModuleFlippers::CleanUp()
 // Update: draw background
 update_status ModuleFlippers::Update()
 {
+	p2List_item<Flipper*>* f = flippers.getFirst();
+	p2List_item<Flipper*>* f2 = flippers.getLast();
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT)
 	{
-		p2List_item<Flipper*>* f = flippers.getFirst();
-		while (f != NULL)
+		if (f != NULL)
 		{
 			if (f->data->side == false)
 			{
-				f->data->Rect->body->ApplyForce({ -3,0 }, { 0,0 }, true);
+				f->data->Rect->body->ApplyForce({ -1,0 }, { 0,0 }, true);
+				f2->data->Rect->body->ApplyForce({ 1,0 }, { 0,0 }, true);
+				angle++;
 			}
 			f = f->next;
 		}
 	}
+	if (angle > 0) angle--;
+	
+	LOG("Ángulo: %d", angle);
+
+
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT)
 	{
-		p2List_item<Flipper*>* f = flippers.getFirst();
-		while (f != NULL)
-		{
-			if (f->data->side == true)
-			{
-				f->data->Rect->body->ApplyForce({ 3,0 }, { 0,0 }, true);
-			}
-			f = f->next;
-		}
+
 	}
 	return UPDATE_CONTINUE;
 }

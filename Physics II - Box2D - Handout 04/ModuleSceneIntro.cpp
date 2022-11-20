@@ -43,7 +43,8 @@ bool ModuleSceneIntro::Start()
 
 	//PINBALL
 	background = App->textures->Load("pinball/PinballDef.png");
-	ballTexture = App->textures->Load("pinball/pinballAssets.png");
+	assets = App->textures->Load("pinball/pinballAssets.png");
+	flipper = { 192, 199, 56, 16 };
 
 	// GAME OVER SCREEN
 	gameovertexture = App->textures->Load("pinball/GAMEOVER.png");
@@ -116,8 +117,9 @@ update_status ModuleSceneIntro::Update()
 					circles.del(circles.getLast()->prev);
 				}
 				i++;
-				App->renderer->Blit(ballTexture, circles.getLast()->prev->data->body->GetPosition().x, circles.getLast()->prev->data->body->GetPosition().y, false, NULL);
 			}	
+			//App->renderer->Blit(assets, circles.getLast()->prev->data->body->GetPosition().x, circles.getLast()->prev->data->body->GetPosition().y, false, NULL);
+			App->renderer->Blit(assets, 124, 555, false, &flipper, 1.0f/*, App->flippers->angle*/);
 
 			if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 			{

@@ -66,7 +66,9 @@ public:
 
 	//PINBALL
 	SDL_Texture* background = nullptr;
-	SDL_Texture* ballTexture;
+	SDL_Texture* assets;
+	SDL_Rect* ball;
+	SDL_Rect flipper;
 
 
 	//GAMEOVER
