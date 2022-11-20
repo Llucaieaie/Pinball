@@ -207,6 +207,7 @@ update_status ModuleSceneIntro::Update()
 			{
 				circles.getLast()->data->body->SetTransform({ PIXEL_TO_METERS(360), PIXEL_TO_METERS(530) }, 0);
 				b = true;
+				vidas--;
 			}
 			LOG("position.x: %d", circles.getLast()->data->body->GetPosition().x);
 			LOG("position.y: %d", circles.getLast()->data->body->GetPosition().y);
@@ -260,12 +261,13 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 	App->audio->PlayFx(bonus_fx);
 
-	if (bodyA->body == circles.getLast()->data->body && bodyB->body == sensor->body)
+	if (bodyA->body == circles.getLast()->data->body && bodyB->body == sensor->body && vidas == 0)
 	{
 		currentScene = GAMEOVER;
 		App->audio->PlayMusic("Game/pinball/silence.ogg", 0);
 		App->audio->PlayFx(gameover, 0);
 		currentScore = 0;
+		vidas = 3;
 	}
 	
 	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma->body) currentScore += 20;
