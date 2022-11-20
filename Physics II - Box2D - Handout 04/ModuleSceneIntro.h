@@ -52,6 +52,7 @@ public:
 	bool ray_on;
 
 	int i = 0;
+	bool b = true;
 
 	// Font stuff
 	int font = -1;
@@ -75,7 +76,7 @@ public:
 	//PINBALL
 	SDL_Texture* background = nullptr;
 	SDL_Texture* assets;
-	SDL_Rect* ball;
+	SDL_Rect ball;
 	SDL_Rect flipper;
 
 
