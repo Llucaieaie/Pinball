@@ -78,7 +78,10 @@ public:
 	SDL_Texture* background = nullptr;
 	SDL_Texture* assets;
 	SDL_Rect ball;
-	SDL_Rect flipper;
+	//SDL_Rect flipper;
+	//SDL_Texture* flippers;
+	
+	
 
 
 	//GAMEOVER
@@ -88,7 +91,5 @@ public:
 	int scoreFont = -1;
 	int highscoreFont = -1;
 	int sizescoreFont = 32;
-
-	Animation currentAnimation;
 	
 };

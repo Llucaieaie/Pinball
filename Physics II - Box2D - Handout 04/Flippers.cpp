@@ -1,11 +1,13 @@
 #include "Globals.h"
 #include "Application.h"
-#include "Flippers.h"
-#include "ModuleInput.h"
-#include "ModuleAudio.h"
 #include "ModuleRender.h"
+#include "ModulePlayer.h"
+#include "ModuleSceneIntro.h"
+#include "ModuleInput.h"
 #include "ModuleTextures.h"
+#include "ModuleAudio.h"
 #include "ModulePhysics.h"
+#include "Flippers.h"
 
 
 ModuleFlippers::ModuleFlippers(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -19,6 +21,8 @@ ModuleFlippers::~ModuleFlippers()
 bool ModuleFlippers::Start()
 {
 	LOG("Loading flippers");
+
+	flippertexture = App->textures->Load("pinball/Flippers.png");
 
 	b2Vec2 a = { -0.44, 0 };
 	b2Vec2 b = { 0, 0 };
@@ -52,36 +56,51 @@ bool ModuleFlippers::CleanUp()
 // Update: draw background
 update_status ModuleFlippers::Update()
 {
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if (App->scene_intro->currentScene == Scene::PINBALL)
 	{
+
+
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		{
+			p2List_item<Flipper*>* f = flippers.getFirst();
+			while (f != NULL)
+			{
+				if (f->data->side == false)
+				{
+					f->data->Rect->body->ApplyForce({ -3,0 }, { 0,0 }, true);
+				}
+				f = f->next;
+			}
+		}
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		{
+			p2List_item<Flipper*>* f = flippers.getFirst();
+			while (f != NULL)
+			{
+				if (f->data->side == true)
+				{
+					f->data->Rect->body->ApplyForce({ 3,0 }, { 0,0 }, true);
+				}
+				f = f->next;
+			}
+		}
+		LOG("Ángulo: %d", angle);
+
 		p2List_item<Flipper*>* f = flippers.getFirst();
 		while (f != NULL)
 		{
-			if (f->data->side == false)
-			{
-				f->data->Rect->body->ApplyForce({ -3,0 }, { 0,0 }, true);
-			}
+			int x, y;
+			f->data->Rect->GetPosition(x, y);
+
+			App->renderer->Blit(flippertexture, x, y - 5, false, &rectSect, f->data->side, 1.0f, f->data->Rect->GetRotation());
+
 			f = f->next;
 		}
-	}
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		p2List_item<Flipper*>* f = flippers.getFirst();
-		while (f != NULL)
+
+		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT)
 		{
-			if (f->data->side == true)
-			{
-				f->data->Rect->body->ApplyForce({ 3,0 }, { 0,0 }, true);
-			}
-			f = f->next;
+
 		}
-	}
-	LOG("Ángulo: %d", angle);
-
-
-	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_REPEAT)
-	{
-
 	}
 	return UPDATE_CONTINUE;
 }
