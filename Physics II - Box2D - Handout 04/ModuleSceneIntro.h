@@ -34,6 +34,14 @@ public:
 	p2List<PhysBody*> ricks;
 
 	PhysBody* sensor;
+	PhysBody* suma;
+	PhysBody* suma2;
+	PhysBody* suma3;
+	PhysBody* suma4;
+	PhysBody* suma5;
+	PhysBody* suma6;
+	PhysBody* suma7;
+	PhysBody* suma8;
 	bool sensed;
 
 	SDL_Texture* circle;

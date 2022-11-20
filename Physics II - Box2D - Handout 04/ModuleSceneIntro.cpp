@@ -33,6 +33,14 @@ bool ModuleSceneIntro::Start()
 	
 
 	sensor = App->physics->CreateRectangleSensor(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 5, SCREEN_WIDTH / 2, 5);
+	suma = App->physics->CreateRectangleSensor(28, 294, 2, 5);
+	suma2 = App->physics->CreateRectangleSensor(130, 117, 2, 5);
+	suma3 = App->physics->CreateRectangleSensor(333, 378, 2, 5);
+	suma4 = App->physics->CreateRectangleSensor(318, 154, 2, 5);
+	suma5 = App->physics->CreateRectangleSensor(308, 91, 2, 5);
+	suma6 = App->physics->CreateRectangleSensor(34, 509, 2, 5);
+	suma7 = App->physics->CreateRectangleSensor(330, 509, 2, 5);
+	suma8 = App->physics->CreateRectangleSensor(291, 170, 2, 5);
 	bool sensed = false;
 
 	// TITLE SCREEN
@@ -184,6 +192,54 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	{
 		currentScene = GAMEOVER;
 		currentScore = 0;
+
+	}
+	
+	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma->body)
+	{
+		currentScore += 10;
+
+	}
+
+	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma2->body)
+	{
+		currentScore += 20;
+
+	}
+
+	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma3->body)
+	{
+		currentScore += 30;
+
+	}
+
+	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma4->body)
+	{
+		currentScore += 20;
+
+	}
+
+	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma5->body)
+	{
+		currentScore += 20;
+
+	}
+
+	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma6->body)
+	{
+		currentScore += 10;
+
+	}
+
+	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma7->body)
+	{
+		currentScore += 20;
+
+	}
+
+	if (bodyA->body == circles.getLast()->data->body && bodyB->body == suma8->body)
+	{
+		currentScore += 10;
 
 	}
 
