@@ -8,10 +8,14 @@
 #include "ModulePhysics.h"
 #include "Flippers.h"
 
+#include "ModuleFonts.h"
+#include "ModulePlayer.h"
+
+
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	//circle = box = rick = NULL;
-	ray_on = false;
+	//ray_on = false;
 	//sensed = false;
 }
 
@@ -44,6 +48,9 @@ bool ModuleSceneIntro::Start()
 	// GAME OVER SCREEN
 	gameovertexture = App->textures->Load("pinball/GAMEOVER.png");
 
+	// FONT
+	scoreFont = App->fonts->Load("pinball/nesfont.png", " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{:}~ª", 6);
+
 
 	return ret;
 }
@@ -55,6 +62,12 @@ bool ModuleSceneIntro::CleanUp()
 
 	//TITLE SCREEN
 	App->textures->Unload(backgroundTexture);
+
+	//GAME OVER
+	App->textures->Unload(gameovertexture);
+
+	//FONT
+	App->fonts->Unload(scoreFont);
 
 	return true;
 }
@@ -74,6 +87,7 @@ update_status ModuleSceneIntro::Update()
 	case TITLESCREEN:
 		if (startTitle)
 		{
+			App->physics->debug = false;
 			startTitle = false;
 			App->audio->PlayMusic("Game/pinball/bonus.wav", 0.0f);
 		}
@@ -88,6 +102,7 @@ update_status ModuleSceneIntro::Update()
 
 	case PINBALL:
 		{
+
 			App->renderer->Blit(background, 0, 0, NULL);
 
 			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
@@ -103,10 +118,10 @@ update_status ModuleSceneIntro::Update()
 				App->renderer->Blit(ballTexture, circles.getLast()->prev->data->body->GetPosition().x, circles.getLast()->prev->data->body->GetPosition().y, false, NULL);
 			}	
 
-			/*if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 			{
 				currentScene = GAMEOVER;
-			}*/
+			}
 
 
 			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
@@ -115,44 +130,32 @@ update_status ModuleSceneIntro::Update()
 				circles.getLast()->data->body->ApplyForceToCenter(vel, true);
 			}
 
-			// Prepare for raycast ------------------------------------------------------
-
-			iPoint mouse;
-			mouse.x = App->input->GetMouseX();
-			mouse.y = App->input->GetMouseY();
-			int ray_hit = ray.DistanceTo(mouse);
-
-			fVector normal(0.0f, 0.0f);
-
 			// All draw functions ------------------------------------------------------
 			p2List_item<PhysBody*>* c = circles.getFirst();
 
+			// Text UI ----------------
+			App->fonts->BlitText(sizescoreFont - 20, sizescoreFont - 30, scoreFont, "SCORE");
+			sprintf_s(currentScoreNum, 12, "%6d", currentScore);
+			App->fonts->BlitText(sizescoreFont - 20, sizescoreFont - 10, scoreFont, currentScoreNum);
+						
+			App->fonts->BlitText(sizescoreFont * 8, sizescoreFont - 30, scoreFont, "H-SCORE");
+			sprintf_s(highScoreNum, 12, "%6d", highScore);
+			App->fonts->BlitText(sizescoreFont * 8, sizescoreFont - 10, scoreFont, highScoreNum);
 
-			// ray -----------------
-			if (ray_on == true)
-			{
-				fVector destination(mouse.x - ray.x, mouse.y - ray.y);
-				destination.Normalize();
-				destination *= ray_hit;
+			if (currentScore > highScore) highScore = currentScore;
 
-				App->renderer->DrawLine(ray.x, ray.y, ray.x + destination.x, ray.y + destination.y, 255, 255, 255);
-
-				if (normal.x != 0.0f)
-					App->renderer->DrawLine(ray.x + destination.x, ray.y + destination.y, ray.x + destination.x + normal.x * 25.0f, ray.y + destination.y + normal.y * 25.0f, 100, 255, 100);
-			}
-
-			
+			if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN) currentScore += 100;
 		}
 	case GAMEOVER:
 		{
 			if (currentScene == GAMEOVER) 
 			{
+				App->physics->debug = false;
 				App->renderer->Blit(gameovertexture, 0, 0, true);
 				LOG("HAS PERDIDO");
 
 				if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_STATE::KEY_DOWN)
 				{
-					//App->physics->debug = false;
 					currentScene = TITLESCREEN;
 				}
 			}
@@ -177,6 +180,8 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (bodyA->body == circles.getLast()->data->body && bodyB->body == sensor->body)
 	{
 		currentScene = GAMEOVER;
+		currentScore = 0;
+
 	}
 
 	/*

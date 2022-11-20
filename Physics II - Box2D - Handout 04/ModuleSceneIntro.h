@@ -3,6 +3,8 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "Globals.h"
+#include "Animation.h"
+
 
 enum Scene
 {
@@ -43,6 +45,18 @@ public:
 
 	int i = 0;
 
+	// Font stuff
+	int font = -1;
+	int fontSize = 12;
+
+	char currentScoreNum[12] = { "\0" };
+	char highScoreNum[12] = { "\0" };
+	char prevScoreNum[12] = { "\0" };
+
+	int currentScore = 0; 
+	int previousScore; 
+	int highScore = 0;
+
 	//SCENES
 	Scene currentScene;
 
@@ -57,4 +71,11 @@ public:
 
 	//GAMEOVER
 	SDL_Texture* gameovertexture = nullptr;
+
+	//FONTS
+	int scoreFont = -1;
+	int sizescoreFont = 32;
+
+	Animation currentAnimation;
+	
 };

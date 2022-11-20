@@ -9,6 +9,7 @@
 #include "ModulePhysics.h"
 #include "ModuleSceneIntro.h"
 #include "Flippers.h"
+#include "ModuleFonts.h"
 
 #include "Application.h"
 
@@ -19,6 +20,7 @@ Application::Application()
 	textures = new ModuleTextures(this);
 	input = new ModuleInput(this);
 	audio = new ModuleAudio(this, true);
+	fonts = new ModuleFonts(this);
 	player = new ModulePlayer(this);
 	scene_intro = new ModuleSceneIntro(this);
 	physics = new ModulePhysics(this);
@@ -42,6 +44,9 @@ Application::Application()
 	
 	// Player
 	AddModule(player);
+
+	//Fonts
+	AddModule(fonts);
 
 	//Flippers
 	AddModule(flippers);
