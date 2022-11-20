@@ -74,6 +74,7 @@ public:
 
 	//FONTS
 	int scoreFont = -1;
+	int highscoreFont = -1;
 	int sizescoreFont = 32;
 
 	Animation currentAnimation;

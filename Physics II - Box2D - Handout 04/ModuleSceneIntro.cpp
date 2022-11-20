@@ -49,7 +49,8 @@ bool ModuleSceneIntro::Start()
 	gameovertexture = App->textures->Load("pinball/GAMEOVER.png");
 
 	// FONT
-	scoreFont = App->fonts->Load("pinball/nesfont.png", " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{:}~ª", 6);
+	scoreFont = App->fonts->Load("pinball/nesfont1.png", " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{:}~ª", 6);
+	highscoreFont = App->fonts->Load("pinball/nesfont.png", " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{:}~ª", 6);
 
 
 	return ret;
@@ -134,13 +135,13 @@ update_status ModuleSceneIntro::Update()
 			p2List_item<PhysBody*>* c = circles.getFirst();
 
 			// Text UI ----------------
-			App->fonts->BlitText(sizescoreFont - 20, sizescoreFont - 30, scoreFont, "SCORE");
+			App->fonts->BlitText(sizescoreFont - 18, sizescoreFont - 15, scoreFont, "SCORE");
 			sprintf_s(currentScoreNum, 12, "%6d", currentScore);
-			App->fonts->BlitText(sizescoreFont - 20, sizescoreFont - 10, scoreFont, currentScoreNum);
+			App->fonts->BlitText(sizescoreFont - 18, sizescoreFont + 5, scoreFont, currentScoreNum);
 						
-			App->fonts->BlitText(sizescoreFont * 8, sizescoreFont - 30, scoreFont, "H-SCORE");
+			App->fonts->BlitText(sizescoreFont * 9, sizescoreFont - 15, scoreFont, "H-SCORE");
 			sprintf_s(highScoreNum, 12, "%6d", highScore);
-			App->fonts->BlitText(sizescoreFont * 8, sizescoreFont - 10, scoreFont, highScoreNum);
+			App->fonts->BlitText(sizescoreFont + 273, sizescoreFont + 5, scoreFont, highScoreNum);
 
 			if (currentScore > highScore) highScore = currentScore;
 
