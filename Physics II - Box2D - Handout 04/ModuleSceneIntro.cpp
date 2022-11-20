@@ -61,15 +61,12 @@ bool ModuleSceneIntro::Start()
 	background = App->textures->Load("pinball/PinballDef.png");
 	assets = App->textures->Load("pinball/pinballAssets.png");
 	ball = { 253, 164, 15, 15 };
-<<<<<<< Updated upstream
-	
-=======
 
 	//BONUS
 	bonus1 = { 135, 113, 23, 24 };
 	bonus2 = { 164, 113, 23, 24 };
 	bonus3 = { 192, 113, 23, 24 };
->>>>>>> Stashed changes
+
 
 	// GAME OVER SCREEN
 	gameovertexture = App->textures->Load("pinball/GAMEOVER.png");
@@ -135,102 +132,102 @@ update_status ModuleSceneIntro::Update()
 
 	case PINBALL:
 		{
-<<<<<<< Updated upstream
+
 			App->renderer->Blit(background, 0, 0, NULL);
 
-/*			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-=======
+			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) 
+			{
+
 			
-			App->renderer->Blit(background, 0, 0, NULL);
+				App->renderer->Blit(background, 0, 0, NULL);
 
-			//BONUS 2X
-			App->renderer->Blit(assets, 16, 278, false, &bonus1);
-			App->renderer->Blit(assets, 173, 130, false, &bonus1);
-			App->renderer->Blit(assets, 237, 142, false, &bonus1);
-			App->renderer->Blit(assets, 200, 178, false, &bonus1);
+				//BONUS 2X
+				App->renderer->Blit(assets, 16, 278, false, &bonus1);
+				App->renderer->Blit(assets, 173, 130, false, &bonus1);
+				App->renderer->Blit(assets, 237, 142, false, &bonus1);
+				App->renderer->Blit(assets, 200, 178, false, &bonus1);
 
-			//BONUS 3X
-			App->renderer->Blit(assets, 250, 203, false, &bonus2);
-			App->renderer->Blit(assets, 60, 346, false, &bonus2);
-			App->renderer->Blit(assets, 230, 353, false, &bonus2);
+				//BONUS 3X
+				App->renderer->Blit(assets, 250, 203, false, &bonus2);
+				App->renderer->Blit(assets, 60, 346, false, &bonus2);
+				App->renderer->Blit(assets, 230, 353, false, &bonus2);
 
-			//BONUS 5X
-			App->renderer->Blit(assets, 118, 105, false, &bonus3);
-			App->renderer->Blit(assets, 320, 365, false, &bonus3);
+				//BONUS 5X
+				App->renderer->Blit(assets, 118, 105, false, &bonus3);
+				App->renderer->Blit(assets, 320, 365, false, &bonus3);
 
 
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
->>>>>>> Stashed changes
+				if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 
-				circles.add(App->physics->CreateCircle(360, 530, 8, b2_dynamicBody));
-				circles.getLast()->data->listener = this;
-				if (i != 0)
-				{
-					circles.getLast()->prev->data->body->SetTransform({ PIXEL_TO_METERS(10000), PIXEL_TO_METERS(10000) }, 0);
-					circles.del(circles.getLast()->prev);
+
+					circles.add(App->physics->CreateCircle(360, 530, 8, b2_dynamicBody));
+					circles.getLast()->data->listener = this;
+					if (i != 0)
+					{
+						circles.getLast()->prev->data->body->SetTransform({ PIXEL_TO_METERS(10000), PIXEL_TO_METERS(10000) }, 0);
+						circles.del(circles.getLast()->prev);
+					}
+					i++;
 				}
-				i++;
-			}*/	
 			//App->renderer->Blit(assets, circles.getLast()->prev->data->body->GetPosition().x, circles.getLast()->prev->data->body->GetPosition().y, false, NULL);
 			//App->renderer->Blit(assets, 124, 555, false, &flipper, 1.0f, App->flippers->angle);
 
-			if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-			{
-				currentScene = GAMEOVER;
-			}
-
-
-			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && b == true)
-			{
-
-				if (power > -100)
+				if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 				{
-					power-=5;
+					currentScene = GAMEOVER;
 				}
 
-				LOG("poder %d", power);
-			}
-			else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP && b == true)
-			{
-				b2Vec2 vel = b2Vec2(0, power);
-				circles.getLast()->data->body->ApplyForceToCenter(vel, true);
-				b = false;
-				LOG("poder %d", power);
-			}
-			else
-				power = -5;
 
-			int x;
-			int y;
-			circles.getLast()->data->GetPosition(x, y);
-			LOG("%d", y);
-			App->renderer->Blit(assets, x, y, false, &ball);
-			if (y > 800)
-			{
-				circles.getLast()->data->body->SetTransform({ PIXEL_TO_METERS(360), PIXEL_TO_METERS(530) }, 0);
-				b = true;
-				vidas--;
-			}
-			LOG("position.x: %d", circles.getLast()->data->body->GetPosition().x);
-			LOG("position.y: %d", circles.getLast()->data->body->GetPosition().y);
-			if (circles.getLast()->data->body->GetPosition().x >= inPosX && circles.getLast()->data->body->GetPosition().y >= inPosY)
-				b = true;
+				if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && b == true)
+				{
 
-			// All draw functions ------------------------------------------------------
-			p2List_item<PhysBody*>* c = circles.getFirst();
+					if (power > -100)
+					{
+						power-=5;
+					}
 
-			// Text UI ----------------
-			App->fonts->BlitText(sizescoreFont - 18, sizescoreFont - 15, scoreFont, "SCORE");
-			sprintf_s(currentScoreNum, 12, "%6d", currentScore);
-			App->fonts->BlitText(sizescoreFont - 18, sizescoreFont + 5, scoreFont, currentScoreNum);
+					LOG("poder %d", power);
+				}
+				else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP && b == true)
+				{
+					b2Vec2 vel = b2Vec2(0, power);
+					circles.getLast()->data->body->ApplyForceToCenter(vel, true);
+					b = false;
+					LOG("poder %d", power);
+				}
+				else power = -5;
+
+				int x;
+				int y;
+				circles.getLast()->data->GetPosition(x, y);
+				LOG("%d", y);
+				App->renderer->Blit(assets, x, y, false, &ball);
+				if (y > 800)
+				{
+					circles.getLast()->data->body->SetTransform({ PIXEL_TO_METERS(360), PIXEL_TO_METERS(530) }, 0);
+					b = true;
+					vidas--;
+				}
+				LOG("position.x: %d", circles.getLast()->data->body->GetPosition().x);
+				LOG("position.y: %d", circles.getLast()->data->body->GetPosition().y);
+				if (circles.getLast()->data->body->GetPosition().x >= inPosX && circles.getLast()->data->body->GetPosition().y >= inPosY)
+					b = true;
+
+				// All draw functions ------------------------------------------------------
+				p2List_item<PhysBody*>* c = circles.getFirst();
+
+				// Text UI ----------------
+				App->fonts->BlitText(sizescoreFont - 18, sizescoreFont - 15, scoreFont, "SCORE");
+				sprintf_s(currentScoreNum, 12, "%6d", currentScore);
+				App->fonts->BlitText(sizescoreFont - 18, sizescoreFont + 5, scoreFont, currentScoreNum);
 						
-			App->fonts->BlitText(sizescoreFont * 9, sizescoreFont - 15, scoreFont, "H-SCORE");
-			sprintf_s(highScoreNum, 12, "%6d", highScore);
-			App->fonts->BlitText(sizescoreFont + 273, sizescoreFont + 5, scoreFont, highScoreNum);
+				App->fonts->BlitText(sizescoreFont * 9, sizescoreFont - 15, scoreFont, "H-SCORE");
+				sprintf_s(highScoreNum, 12, "%6d", highScore);
+				App->fonts->BlitText(sizescoreFont + 273, sizescoreFont + 5, scoreFont, highScoreNum);
 
-			if (currentScore > highScore) highScore = currentScore;
+				if (currentScore > highScore) highScore = currentScore;
 
-			if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN) currentScore += 100;
+				if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN) currentScore += 100;
 
 			break;
 		}
@@ -259,7 +256,7 @@ update_status ModuleSceneIntro::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
+void OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
 	int x, y;
 
