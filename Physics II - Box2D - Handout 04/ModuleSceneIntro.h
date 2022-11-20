@@ -93,6 +93,7 @@ public:
 
 	//GAMEOVER
 	SDL_Texture* gameovertexture = nullptr;
+	unsigned int gameover;
 
 	//FONTS
 	int scoreFont = -1;

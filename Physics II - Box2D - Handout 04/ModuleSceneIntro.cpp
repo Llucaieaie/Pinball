@@ -71,6 +71,7 @@ bool ModuleSceneIntro::Start()
 
 	// GAME OVER SCREEN
 	gameovertexture = App->textures->Load("pinball/GAMEOVER.png");
+	gameover = App->audio->LoadFx("pinball/gameoverSound.wav");
 
 	// FONT
 	scoreFont = App->fonts->Load("pinball/nesfont1.png", " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{:}~ª", 6);
@@ -79,6 +80,9 @@ bool ModuleSceneIntro::Start()
 	// BALL
 	circles.add(App->physics->CreateCircle(360, 530, 8, b2_dynamicBody));
 	circles.getLast()->data->listener = this;
+
+	inPosX = circles.getLast()->data->body->GetPosition().x;
+	inPosY = circles.getLast()->data->body->GetPosition().y;
 
 	return ret;
 }
@@ -121,7 +125,7 @@ update_status ModuleSceneIntro::Update()
 		}
 		if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_STATE::KEY_DOWN) {
 			currentScene = PINBALL;
-			App->audio->PlayMusic("Game/pinball/audio/music/silence.ogg");
+			App->audio->PlayMusic("pinball/music.ogg");
 		}
 
 		App->renderer->Blit(backgroundTexture, 0, 0, true);
@@ -166,26 +170,33 @@ update_status ModuleSceneIntro::Update()
 			if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 			{
 				currentScene = GAMEOVER;
+				App->audio->PlayMusic("Game/pinball/silence.ogg", 0);
+				App->audio->PlayFx(gameover, 0);
 			}
 
 
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && b == true)
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT && b == true)
 			{
 
-				if (power > -200)
+				if (power > -100)
 				{
-					power--;
+					power -= 5;
 				}
 
 				LOG("poder %d", power);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP && b == true)
+			else if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_UP && b == true)
 			{
 				b2Vec2 vel = b2Vec2(0, power);
 				circles.getLast()->data->body->ApplyForceToCenter(vel, true);
 				b = false;
 				LOG("poder %d", power);
 			}
+			else
+				power = -5;
+
+			if (circles.getLast()->data->body->GetPosition().x >= inPosX && circles.getLast()->data->body->GetPosition().y >= inPosY)
+				b = true;
 
 			int x;
 			int y;
@@ -197,6 +208,10 @@ update_status ModuleSceneIntro::Update()
 				circles.getLast()->data->body->SetTransform({ PIXEL_TO_METERS(360), PIXEL_TO_METERS(530) }, 0);
 				b = true;
 			}
+			LOG("position.x: %d", circles.getLast()->data->body->GetPosition().x);
+			LOG("position.y: %d", circles.getLast()->data->body->GetPosition().y);
+			if (circles.getLast()->data->body->GetPosition().x >= inPosX && circles.getLast()->data->body->GetPosition().y >= inPosY)
+				b = true;
 
 			// All draw functions ------------------------------------------------------
 			p2List_item<PhysBody*>* c = circles.getFirst();
@@ -248,6 +263,8 @@ void ModuleSceneIntro::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	if (bodyA->body == circles.getLast()->data->body && bodyB->body == sensor->body)
 	{
 		currentScene = GAMEOVER;
+		App->audio->PlayMusic("Game/pinball/silence.ogg", 0);
+		App->audio->PlayFx(gameover, 0);
 		currentScore = 0;
 	}
 	
