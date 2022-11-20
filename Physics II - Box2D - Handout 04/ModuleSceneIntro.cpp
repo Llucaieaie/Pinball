@@ -58,6 +58,7 @@ bool ModuleSceneIntro::Start()
 
 
 
+
 	// GAME OVER SCREEN
 	gameovertexture = App->textures->Load("pinball/GAMEOVER.png");
 
@@ -119,6 +120,7 @@ update_status ModuleSceneIntro::Update()
 
 	case PINBALL:
 		{
+			App->audio->PlayMusic("pinball/music.ogg");
 
 			App->renderer->Blit(background, 0, 0, NULL);
 
