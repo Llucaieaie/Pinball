@@ -42,6 +42,8 @@ public:
 	SDL_Rect bonus2;
 	SDL_Rect bonus3;
 
+	SDL_Rect flecha;
+
 	bool sensed;
 
 	SDL_Texture* circle;
