@@ -55,6 +55,7 @@ public:
 	//b detecta si la bola está al inicio
 	bool b = true;
 	int power = -5;
+	int vidas = 1;
 
 	//posicion inicial
 	int inPosX;
