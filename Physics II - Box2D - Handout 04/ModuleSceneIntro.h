@@ -4,6 +4,14 @@
 #include "p2Point.h"
 #include "Globals.h"
 
+enum Scene
+{
+	TITLESCREEN,
+	PINBALL,
+	GAMEOVER
+};
+
+
 class PhysBody;
 
 class ModuleSceneIntro : public Module
@@ -13,6 +21,7 @@ public:
 	~ModuleSceneIntro();
 
 	bool Start();
+	update_status PreUpdate();
 	update_status Update();
 	bool CleanUp();
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
@@ -33,4 +42,14 @@ public:
 	bool ray_on;
 
 	int i = 0;
+
+	//SCENES
+	Scene currentScene;
+
+	//TITLE SCREEN
+	SDL_Texture* backgroundTexture = nullptr;
+	bool startTitle;
+
+	//GAMEOVER
+	SDL_Texture* gameovertexture = nullptr;
 };

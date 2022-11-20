@@ -90,12 +90,30 @@ bool ModuleRender::CleanUp()
 }
 
 // Blit to screen
-bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y )
+bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, bool fullscreen, SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y )
 {
 	bool ret = true;
 	SDL_Rect rect;
 	rect.x = (int) (camera.x * speed) + x * SCREEN_SIZE;
 	rect.y = (int) (camera.y * speed) + y * SCREEN_SIZE;
+
+	if (fullscreen == true)
+	{
+		rect.w = SCREEN_WIDTH;
+		rect.h = SCREEN_HEIGHT;
+	}
+	else
+	{
+		if (section != NULL)
+		{
+			rect.w = section->w;
+			rect.h = section->h;
+		}
+		else
+		{
+			SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+		}
+	}
 
 	if(section != NULL)
 	{
