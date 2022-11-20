@@ -120,11 +120,11 @@ update_status ModuleSceneIntro::Update()
 
 	case PINBALL:
 		{
-			App->audio->PlayMusic("pinball/music.ogg");
+			//App->audio->PlayMusic("pinball/music.ogg");
 
 			App->renderer->Blit(background, 0, 0, NULL);
 
-			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+/*			if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 
 				circles.add(App->physics->CreateCircle(360, 530, 8, b2_dynamicBody));
 				circles.getLast()->data->listener = this;
@@ -134,7 +134,7 @@ update_status ModuleSceneIntro::Update()
 					circles.del(circles.getLast()->prev);
 				}
 				i++;
-			}	
+			}*/	
 			//App->renderer->Blit(assets, circles.getLast()->prev->data->body->GetPosition().x, circles.getLast()->prev->data->body->GetPosition().y, false, NULL);
 			//App->renderer->Blit(assets, 124, 555, false, &flipper, 1.0f, App->flippers->angle);
 
